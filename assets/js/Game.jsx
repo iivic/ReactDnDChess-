@@ -1,9 +1,10 @@
-let knightPosition1 = [1, 7];
-let knightPosition2 = [1, 0];
+let knightPosition = [];
+knightPosition.push([1, 7]);
+knightPosition.push([1, 0]);
 let observer = null;
 
 function emitChange() {
-    observer(knightPosition1, knightPosition2);
+    observer(knightPosition[0], knightPosition[1]);
 }
 
 export function observe(o) {
@@ -19,13 +20,13 @@ export function observe(o) {
     };
 }
 
-export function moveKnight1(toX, toY) {
-    knightPosition1 = [toX, toY];
+export function moveKnight(id, toX, toY) {
+    knightPosition[id] = [toX, toY];
     emitChange();
 }
 
-export function canMoveKnight1(toX, toY) {
-    const [x, y] = knightPosition1;
+export function canMoveKnight(id, toX, toY) {
+    const [x, y] = knightPosition[id];
     const dx = toX - x;
     const dy = toY - y;
 

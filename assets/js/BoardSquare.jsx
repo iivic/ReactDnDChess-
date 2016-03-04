@@ -1,16 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import Square from './Square';
-import { canMoveKnight1, moveKnight1 } from './Game';
+import { canMoveKnight, moveKnight } from './Game';
 import { ItemTypes } from './Constants';
 import { DropTarget } from 'react-dnd';
 
 const squareTarget = {
-    canDrop(props) {
-        return canMoveKnight1(props.x, props.y);
+    canDrop(props, monitor) {
+        var item = monitor.getItem();
+        return canMoveKnight(item.id, props.x, props.y);
     },
 
-    drop(props) {
-        return moveKnight1(props.x, props.y);
+    drop(props, monitor) {
+        var item = monitor.getItem();
+        return moveKnight(item.id, props.x, props.y);
     }
 };
 
@@ -39,7 +41,6 @@ class BoardSquare extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { x, y, connectDropTarget, isOver, canDrop } = this.props;
         const black = (x + y) % 2 === 1;
 
@@ -60,12 +61,6 @@ class BoardSquare extends Component {
 BoardSquare.propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    knightPosition1: PropTypes.arrayOf(
-        PropTypes.number.isRequired
-    ).isRequired,
-    knightPosition2: PropTypes.arrayOf(
-        PropTypes.number.isRequired
-    ).isRequired,
     isOver: PropTypes.bool.isRequired,
     canDrop: PropTypes.bool.isRequired
 };

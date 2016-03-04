@@ -26,13 +26,15 @@ class Board extends Component {
     }
 
     renderPiece(x, y) {
+        let id = 0;
         for (var key in this.props) {
             if (this.props.hasOwnProperty(key)) {
                 const [knightX, knightY] = this.props[key];
                 if (x === knightX && y === knightY) {
-                    return <Knight />;
+                    return <Knight id={id} />;
                 }
             }
+            ++id;
         }
     }
 

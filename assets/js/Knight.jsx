@@ -4,7 +4,8 @@ import { DragSource } from 'react-dnd';
 
 const knightSource = {
     beginDrag(props) {
-        return {};
+        const item = { id: props.id };
+        return item;
     }
 };
 
@@ -26,7 +27,7 @@ export default class Knight extends Component {
                 cursor: 'pointer',
                 textAlign: 'center'
             }}
-                isDragging={false}>
+                 isDragging={false}>
                 ♘
             </div>
         );

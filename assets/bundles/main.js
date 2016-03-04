@@ -19744,6 +19744,7 @@
 	    }, {
 	        key: 'renderPiece',
 	        value: function renderPiece(x, y) {
+	            var id = 0;
 	            for (var key in this.props) {
 	                if (this.props.hasOwnProperty(key)) {
 	                    var _props$key = _slicedToArray(this.props[key], 2);
@@ -19752,9 +19753,10 @@
 	                    var knightY = _props$key[1];
 
 	                    if (x === knightX && y === knightY) {
-	                        return _react2.default.createElement(_Knight2.default, null);
+	                        return _react2.default.createElement(_Knight2.default, { id: id });
 	                    }
 	                }
+	                ++id;
 	            }
 	        }
 	    }, {
@@ -19818,11 +19820,13 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var squareTarget = {
-	    canDrop: function canDrop(props) {
-	        return (0, _Game.canMoveKnight1)(props.x, props.y);
+	    canDrop: function canDrop(props, monitor) {
+	        var item = monitor.getItem();
+	        return (0, _Game.canMoveKnight)(item.id, props.x, props.y);
 	    },
-	    drop: function drop(props) {
-	        return (0, _Game.moveKnight1)(props.x, props.y);
+	    drop: function drop(props, monitor) {
+	        var item = monitor.getItem();
+	        return (0, _Game.moveKnight)(item.id, props.x, props.y);
 	    }
 	};
 
@@ -19860,7 +19864,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.props);
 	            var _props = this.props;
 	            var x = _props.x;
 	            var y = _props.y;
@@ -19891,8 +19894,6 @@
 	BoardSquare.propTypes = {
 	    x: _react.PropTypes.number.isRequired,
 	    y: _react.PropTypes.number.isRequired,
-	    knightPosition1: _react.PropTypes.arrayOf(_react.PropTypes.number.isRequired).isRequired,
-	    knightPosition2: _react.PropTypes.arrayOf(_react.PropTypes.number.isRequired).isRequired,
 	    isOver: _react.PropTypes.bool.isRequired,
 	    canDrop: _react.PropTypes.bool.isRequired
 	};
@@ -19976,14 +19977,15 @@
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 	exports.observe = observe;
-	exports.moveKnight1 = moveKnight1;
-	exports.canMoveKnight1 = canMoveKnight1;
-	var knightPosition1 = [1, 7];
-	var knightPosition2 = [1, 0];
+	exports.moveKnight = moveKnight;
+	exports.canMoveKnight = canMoveKnight;
+	var knightPosition = [];
+	knightPosition.push([1, 7]);
+	knightPosition.push([1, 0]);
 	var observer = null;
 
 	function emitChange() {
-	    observer(knightPosition1, knightPosition2);
+	    observer(knightPosition[0], knightPosition[1]);
 	}
 
 	function observe(o) {
@@ -19999,18 +20001,16 @@
 	    };
 	}
 
-	function moveKnight1(toX, toY) {
-	    knightPosition1 = [toX, toY];
+	function moveKnight(id, toX, toY) {
+	    knightPosition[id] = [toX, toY];
 	    emitChange();
 	}
 
-	function canMoveKnight1(toX, toY) {
-	    var _knightPosition = knightPosition1;
+	function canMoveKnight(id, toX, toY) {
+	    var _knightPosition$id = _slicedToArray(knightPosition[id], 2);
 
-	    var _knightPosition2 = _slicedToArray(_knightPosition, 2);
-
-	    var x = _knightPosition2[0];
-	    var y = _knightPosition2[1];
+	    var x = _knightPosition$id[0];
+	    var y = _knightPosition$id[1];
 
 	    var dx = toX - x;
 	    var dy = toY - y;
@@ -26045,7 +26045,8 @@
 
 	var knightSource = {
 	    beginDrag: function beginDrag(props) {
-	        return {};
+	        var item = { id: props.id };
+	        return item;
 	    }
 	};
 
