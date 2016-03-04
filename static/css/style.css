@@ -1,0 +1,11 @@
+#mainContent{
+    height: 600px;
+    width: 600px;
+    border: solid black 2px;
+    margin: 8em auto 0 auto;
+}
+
+.one-square{
+    width: 12.5%;
+    height: 12.5%;
+}
