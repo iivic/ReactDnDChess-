@@ -7,6 +7,7 @@ var mainContent = document.getElementById("mainContent");
 
 observe(function (knightPosition1, knightPosition2) {
     ReactDOM.render(
-        <Board knightPosition1={knightPosition1} knightPosition2={knightPosition2} />,
+        <Board knightPosition1={knightPosition1}
+               knightPosition2={knightPosition2} />,
         mainContent)
 });

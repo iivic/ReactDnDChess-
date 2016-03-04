@@ -7,7 +7,9 @@ import { DropTarget } from 'react-dnd';
 const squareTarget = {
     canDrop(props, monitor) {
         var item = monitor.getItem();
-        return canMoveKnight(item.id, props.x, props.y);
+        let childId = false;
+        if(props.children!=undefined) childId = true;
+        return canMoveKnight(item.id, props.x, props.y, childId);
     },
 
     drop(props, monitor) {

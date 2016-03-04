@@ -65,7 +65,8 @@
 	var mainContent = document.getElementById("mainContent");
 
 	(0, _Game.observe)(function (knightPosition1, knightPosition2) {
-	    _reactDom2.default.render(_react2.default.createElement(_Board2.default, { knightPosition1: knightPosition1, knightPosition2: knightPosition2 }), mainContent);
+	    _reactDom2.default.render(_react2.default.createElement(_Board2.default, { knightPosition1: knightPosition1,
+	        knightPosition2: knightPosition2 }), mainContent);
 	});
 
 /***/ },
@@ -19822,7 +19823,9 @@
 	var squareTarget = {
 	    canDrop: function canDrop(props, monitor) {
 	        var item = monitor.getItem();
-	        return (0, _Game.canMoveKnight)(item.id, props.x, props.y);
+	        var childId = false;
+	        if (props.children != undefined) childId = true;
+	        return (0, _Game.canMoveKnight)(item.id, props.x, props.y, childId);
 	    },
 	    drop: function drop(props, monitor) {
 	        var item = monitor.getItem();
@@ -20006,7 +20009,7 @@
 	    emitChange();
 	}
 
-	function canMoveKnight(id, toX, toY) {
+	function canMoveKnight(id, toX, toY, otherPieceId) {
 	    var _knightPosition$id = _slicedToArray(knightPosition[id], 2);
 
 	    var x = _knightPosition$id[0];
@@ -20015,7 +20018,7 @@
 	    var dx = toX - x;
 	    var dy = toY - y;
 
-	    return Math.abs(dx) === 2 && Math.abs(dy) === 1 || Math.abs(dx) === 1 && Math.abs(dy) === 2;
+	    return Math.abs(dx) === 2 && Math.abs(dy) === 1 || Math.abs(dx) === 1 && Math.abs(dy) === 2 && otherPieceId == false;
 	}
 
 /***/ },

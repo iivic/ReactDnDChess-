@@ -25,11 +25,11 @@ export function moveKnight(id, toX, toY) {
     emitChange();
 }
 
-export function canMoveKnight(id, toX, toY) {
+export function canMoveKnight(id, toX, toY, otherPieceId) {
     const [x, y] = knightPosition[id];
     const dx = toX - x;
     const dy = toY - y;
 
     return (Math.abs(dx) === 2 && Math.abs(dy) === 1) ||
-        (Math.abs(dx) === 1 && Math.abs(dy) === 2);
+        (Math.abs(dx) === 1 && Math.abs(dy) === 2) && otherPieceId == false;
 }
