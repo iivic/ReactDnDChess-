@@ -16,8 +16,6 @@ class Board extends Component {
                 <BoardSquare
                     x={x}
                     y={y}
-                    knightPosition1={this.props.knightPosition1}
-                    knightPosition2={this.props.knightPosition2}
                     >
                     {this.renderPiece(x, y)}
                 </BoardSquare>
